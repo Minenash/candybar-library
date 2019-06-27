@@ -80,9 +80,18 @@ public class IconsHelper {
                 } else if (parser.getName().equals("item")) {
                     String name = parser.getAttributeValue(null, "drawable");
                     int id = getResourceId(context, name);
-                    if (id > 0) {
-                        icons.add(new Icon(name, id));
-                    }
+
+                    //Gets Rid of the app name prefix. i.e: app_, games_, google_, or custom_
+                    name = name.substring(name.indexOf('_') + 1);
+
+                    //Applies Camel Case
+                    String displayName = "";
+                    for (String word : name.split("_"))
+                        displayName += " " + word.substring(0,1).toUpperCase() + word.substring(1);
+                    displayName = displayName.substring(1);
+
+                    if (id > 0)
+                        icons.add(new Icon(displayName, id));
                 }
             }
 
